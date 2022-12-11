@@ -1,0 +1,19 @@
+{
+  "name": "ecommerce-api",
+  "version": "1.0.0",
+  "description": "Api desenvolvid para um simples sistema de ecommerce",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Taylor Oliveira",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
