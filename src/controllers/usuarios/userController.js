@@ -24,10 +24,7 @@ const userController = (app, db) => {
 
   app.post("/", (req, res) => {
 
-    const SQL = `INSERT INTO
-    
-    
-    `;
+    const SQL = `INSERT INTO users (id, nome, email, senha) VALUES (?,?,?,?)`;
 
     const novoUsuario = new User(
         req.body.nome, 
@@ -37,20 +34,20 @@ const userController = (app, db) => {
 
     console.log(novoUsuario)
 
-    // new Promise((resolve, reject) => {
-    //   db.all(SQL, (erro, rows) => {
+    new Promise((resolve, reject) => {
+      db.all(SQL, (erro, rows) => {
           
-    //       if (!erro) {
-    //           resolve(rows);
-    //       } else {
-    //           reject(erro);
-    //       };
+          if (!erro) {
+              resolve(rows);
+          } else {
+              reject(erro);
+          };
 
-    //   });
-    // })
+      });
+    })
   
-    // .then((result) => res.json(result))
-    // .catch((error) => console.log(error));
+    .then((result) => res.json(result))
+    .catch((error) => console.log(error));
 
   });
 
