@@ -1,3 +1,5 @@
+import User from "../../models/userModels.js";
+
 const userController = (app, db) => {
 
   app.get("/", (req, res) => {
@@ -20,7 +22,37 @@ const userController = (app, db) => {
 
   });
 
-  app.post("/", (req, res) => {});
+  app.post("/", (req, res) => {
+
+    const SQL = `INSERT INTO
+    
+    
+    `;
+
+    const novoUsuario = new User(
+        req.body.nome, 
+        req.body.email, 
+        req.body.senha
+    );
+
+    console.log(novoUsuario)
+
+    // new Promise((resolve, reject) => {
+    //   db.all(SQL, (erro, rows) => {
+          
+    //       if (!erro) {
+    //           resolve(rows);
+    //       } else {
+    //           reject(erro);
+    //       };
+
+    //   });
+    // })
+  
+    // .then((result) => res.json(result))
+    // .catch((error) => console.log(error));
+
+  });
 
   app.put("/:id", (req, res) => {});
 
