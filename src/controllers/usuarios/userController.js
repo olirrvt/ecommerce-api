@@ -32,13 +32,18 @@ const userController = (app, db) => {
         req.body.senha
     );
 
-    console.log(novoUsuario)
-
     new Promise((resolve, reject) => {
-      db.all(SQL, (erro, rows) => {
+      db.all(SQL, 
+        [
+            novoUsuario.id, 
+            novoUsuario.nome, 
+            novoUsuario.email, 
+            novoUsuario.senha
+        ], 
+        (erro) => {
           
           if (!erro) {
-              resolve(rows);
+              resolve(novoUsuario);
           } else {
               reject(erro);
           };
