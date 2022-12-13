@@ -3,7 +3,7 @@ import cors from "cors";
 const app = Express();
 
 // Database
-import { db } from "./database/createDatabase.js";
+import db from "./database/sqlite.js";
 
 // Middlewares Setup
 import middlewaresConfig from "./middlewares/config.js";
