@@ -10,7 +10,7 @@ import middlewaresConfig from "./middlewares/config.js";
 middlewaresConfig(app, Express, cors);
 
 // Controllers
-import userController from "./controllers/usuarios/userController.js";
+import userController from "./controllers/userController.js";
 userController(app, db);
 
 export default app;
