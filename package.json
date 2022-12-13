@@ -2,15 +2,16 @@
   "name": "ecommerce-api",
   "version": "1.0.0",
   "description": "Api desenvolvid para um simples sistema de ecommerce",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon ./server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Taylor Oliveira",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2"
   },
   "devDependencies": {
