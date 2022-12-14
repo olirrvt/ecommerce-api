@@ -1,5 +1,6 @@
 import User from "../models/userModels.js";
 import UsersDAO from "../dao/usersDAO.js";
+import { response } from "express";
 
 const userController = (app, db) => {
   const newUsersDao = new UsersDAO(db);
@@ -25,6 +26,17 @@ const userController = (app, db) => {
     };
   });
 
+  // Login
+  app.get('/login', async (req, res) => {
+    try {
+      const { email, senha } = req.body;
+      const dataUser = await newUsersDao.Login(email, senha);
+      res.status(200).json(dataUser);
+    } catch (erro) {
+      console.log(erro);
+    }
+  });
+
   // PostUser
   app.post("/newUser", async (req, res) => {
     try {
@@ -47,30 +59,36 @@ const userController = (app, db) => {
   });
 
   // EditUser
-  app.put("/editUser/:id", async (req, res) => {
-
+  app.put("/user/:id", async (req, res) => { 
+    const id = req.params.id;
     try {
-      const id = req.params.id;
-
       const dadosAntigos = await newUsersDao.pegarUserId(id);
-      console.log(dadosAntigos);
 
-      const dadosNovos = new User (
-        req.body.nome,
-        req.body.email,
-        req.body.senha
-      );
+      if (dadosAntigos[0].id) {
 
-      const data = await newUsersDao.EditarDados(id, {
-        nome: dadosNovos.nome || dadosAntigos.nome,
-        email:dadosNovos.email || dadosAntigos.email,
-        senha: dadosNovos.senha || dadosAntigos.senha
-      });
+        const dadosNovos = new User (
+          req.body.nome,
+          req.body.email, 
+          req.body.senha 
+        );
 
-      res.status(200).json({
-        message: "Usuário atualizado com sucesso!",
-        usuario: data
-      });
+        const usuarioAtual = [ 
+          dadosNovos.nome || dadosAntigos[0].nome, 
+          dadosNovos.email || dadosAntigos[0].email, 
+          dadosNovos.senha || dadosAntigos[0].senha,
+          id,
+        ];
+  
+        const data = await newUsersDao.EditarDados(usuarioAtual);
+  
+        res.status(200).json({
+          message: "Usuário atualizado com sucesso!",
+          usuario: data
+        });
+
+      } else {
+        response.status(400).send({ message: "Usuário não encontrado!" })
+      } 
 
     } catch (erro) {
       console.log(erro);

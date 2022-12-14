@@ -19,10 +19,26 @@ class UsersDAO {
 
   pegarUserId(id) {
 
-    const SQL = "SELECT nome, email, senha FROM users WHERE id = ?"
+    const SQL = "SELECT * FROM users WHERE id = ?"
 
     return new Promise((resolve, reject) => {
       this.db.all(SQL, id, (erro, rows) => {
+        if (!erro) {
+          resolve(rows)
+        } else {
+          reject(erro)
+        }
+      });
+    });
+
+  };
+
+  Login(email, senha) {
+
+    const SQL = "SELECT * FROM users WHERE email = ? AND senha = ?"
+
+    return new Promise((resolve, reject) => {
+      this.db.all(SQL, email, senha, (erro, rows) => {
         if (!erro) {
           resolve(rows)
         } else {
@@ -71,26 +87,24 @@ class UsersDAO {
     });
   };
 
-  EditarDados(id, data){
+  EditarDados(usuarioAtual){
 
     const SQL = "UPDATE users SET nome = ?, email = ?, senha = ? WHERE id = ?"
 
     return new Promise((resolve, reject) => {
-      this.db.run(SQL, id, 
-      this.dadosUsers = [ 
-        data.nome,
-        data.email, 
-        data.senha 
-      ],
+      this.db.run(
+      SQL,
+      usuarioAtual,
       (erro) => {
         if (!erro) {
-          resolve(data);
+          resolve(usuarioAtual);
         } else {
           reject(console.log(erro));
         };
       });
 
     });
+    
   };
 
 };
