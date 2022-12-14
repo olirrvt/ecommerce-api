@@ -1,5 +1,5 @@
 import app from "./src/main.js";
-const port = 4200;
+const port = process.env.port | 4200;
 
 
 app.listen(port, () => {
