@@ -53,8 +53,7 @@ const userController = (app, db) => {
       const id = req.params.id;
 
       const dadosAntigos = await newUsersDao.pegarUserId(id);
-      console.log(dadosAntigos)
-      // Promise
+      console.log(dadosAntigos);
 
       const dadosNovos = new User (
         req.body.nome,
@@ -63,9 +62,9 @@ const userController = (app, db) => {
       );
 
       const data = await newUsersDao.EditarDados(id, {
-        nome: dadosNovos.nome ? dadosNovos.nome : dadosAntigos.nome,
-        email: dadosNovos.email ? dadosNovos.email : dadosAntigos.email,
-        senha: dadosNovos.senha ? dadosNovos.senha : dadosAntigos.senha
+        nome: dadosNovos.nome || dadosAntigos.nome,
+        email:dadosNovos.email || dadosAntigos.email,
+        senha: dadosNovos.senha || dadosAntigos.senha
       });
 
       res.status(200).json({
