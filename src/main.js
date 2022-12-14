@@ -11,6 +11,11 @@ middlewaresConfig(app, Express, cors);
 
 // Controllers
 import userController from "./controllers/userController.js";
+import productController from "./controllers/produtosController.js";
+import carrinhoController from "./controllers/carrinhoController.js";
 userController(app, db);
+productController(app, db);
+carrinhoController(app, db);
+
 
 export default app;
