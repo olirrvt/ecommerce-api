@@ -50,12 +50,11 @@ class UsersDAO {
   };
   
   InserirDadosNovo(novoUsuario) {
-    const SQL = `INSERT INTO users (id, nome, email, senha) VALUES (?,?,?,?)`;
+    const SQL = `INSERT INTO users (nome, email, senha) VALUES (?,?,?)`;
 
     return new Promise((resolve, reject) => {
       this.db.all(SQL, 
         [
-            novoUsuario.id, 
             novoUsuario.nome, 
             novoUsuario.email, 
             novoUsuario.senha

@@ -34,12 +34,11 @@ class ProductsDAO {
     };
 
     InserirProdutoNovo(novoProduto){
-        const SQL = `INSERT INTO products (id, titulo, descricao, valor) VALUES (?,?,?,?)`;
+        const SQL = `INSERT INTO products (titulo, descricao, valor) VALUES (?,?,?)`;
 
         return new Promise((resolve, reject) => {
           this.db.all(SQL, 
-            [ 
-                novoProduto.id,
+            [
                 novoProduto.titulo, 
                 novoProduto.descricao, 
                 novoProduto.valor

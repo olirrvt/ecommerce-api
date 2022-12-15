@@ -105,7 +105,6 @@ const userController = (app, db) => {
       console.log(erro);
     };
   });
-
 };
 
 export default userController;

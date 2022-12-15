@@ -18,7 +18,7 @@ function enableForeignKey() {
 
 const USERS_SCHEMA = `
 CREATE TABLE users (
-    id VARCHAR(50) PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome VARCHAR(80),
     email VARCHAR(80),
     senha VARCHAR(100)
@@ -32,7 +32,7 @@ function CreateTableUser() {
 
 const PRODUCTS_SCHEMA = `
 CREATE TABLE products (
-    id VARCHAR(50) PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     titulo VARCHAR(80),
     descricao VARCHAR(200),
     valor FLOAT 
@@ -46,10 +46,10 @@ CREATE TABLE products (
 
 const CARRINHO_SCHEMA = `
 CREATE TABLE carrinho (
-    id VARCHAR(50) PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     status VARCHAR(20),
-    user_id INT,
-    product_id INT,
+    user_id INTEGER,
+    product_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 )`;
