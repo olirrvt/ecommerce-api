@@ -5,6 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
+    "database": "node ./src/database/createDatabase.js",
     "dev": "nodemon ./server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
