@@ -1,6 +1,5 @@
 import User from "../models/userModels.js";
 import UsersDAO from "../dao/usersDAO.js";
-import { response } from "express";
 
 const userController = (app, db) => {
   const newUsersDao = new UsersDAO(db);
@@ -87,7 +86,7 @@ const userController = (app, db) => {
         });
 
       } else {
-        response.status(400).send({ message: "Usuário não encontrado!" })
+        res.status(400).send({ message: "Usuário não encontrado!" })
       } 
 
     } catch (erro) {

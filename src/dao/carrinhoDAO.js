@@ -1,27 +1,52 @@
 class CarrinhoDAO {
-    constructor(banco) {
-        this.db = banco;
-    };
+  constructor(banco) {
+    this.db = banco;
+  }
 
-    PegarTodos() {
-    
-    };
-    
-    PegarId() {
+  PegarTodos() {
+    const SQL = `SELECT * FROM carrinho`;
 
-    };
+    return new Promise((resolve, reject) => {
+      this.db.all(SQL, (erro, rows) => {
+        if (!erro) {
+          resolve(rows);
+        } else {
+          reject(erro);
+        }
+      });
+    });
+  }
 
-    InserirNovo() {
+  PegarId() {
 
-    };
+  }
 
-    Deletar() {
+  InserirNovo() {
+    const SQL = `INSERT INTO users (id, status) VALUES (?,?,?,?)`;
 
-    };
+    return new Promise((resolve, reject) => {
+      this.db.all(SQL, 
+        [
+            novoUsuario.id, 
+            novoUsuario.nome, 
+            novoUsuario.email, 
+            novoUsuario.senha
+        ], 
+        (erro) => {
+          
+          if (!erro) {
+              resolve(novoUsuario);
+          } else {
+              reject(erro);
+          };
 
-    Editar() {
+      });
+    });
+  }
 
-    };
-};
+  Deletar() {}
+
+  Editar() {}
+}
 
 export default CarrinhoDAO;

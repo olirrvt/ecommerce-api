@@ -77,7 +77,7 @@ const productController = (app, db) => {
           });
   
         } else {
-          response.status(400).send({ message: "Produto não encontrado!" })
+          res.status(400).send({ message: "Produto não encontrado!" })
         };
   
       } catch (erro) {
