@@ -8,9 +8,15 @@ const carrinhoController = (app, db) => {
     app.get("/carrinho", async (req, res) => {
         try {
             const dadosCarrinho = await newCarrinhoDao.PegarTodos();
-            res.json(dadosCarrinho);
+            res.json({
+              carrinho: dadosCarrinho,
+              error: false
+            });
           } catch (erro) {
-            console.log(erro);
+            res.status(400).json({
+              message: erro.message,
+              error: true
+            });
           }
     });
 
@@ -18,9 +24,15 @@ const carrinhoController = (app, db) => {
       try {
         const id = req.params.id;
         const carrinhoData = await newCarrinhoDao.PegarId(id);
-        res.status(200).json(carrinhoData);
+        res.status(200).json({
+          carrinho: carrinhoData,
+          error: false
+        });
       } catch (erro) {
-        console.log(erro);
+        res.status(400).json({
+          message: erro.message,
+          error: true
+        });
       };
     });
 
@@ -37,11 +49,14 @@ const carrinhoController = (app, db) => {
             res
               .status(200)
               .json({
-                message: "Produto adicionado ao carrinho!",
-                usuario: newStateCarrinho
+                message: "Adicionado ao carrinho!",
+                carrinho: newStateCarrinho
               });
           } catch (erro) {
-            console.log(erro);
+            res.status(400).json({
+              message: erro.message,
+              error: true
+            });
           };
     });
 
@@ -68,16 +83,21 @@ const carrinhoController = (app, db) => {
           const data = await newUsersDao.EditarDados(carrinhoAtual);
     
           res.status(200).json({
-            message: "Usuário atualizado com sucesso!",
-            usuario: data
+            message: "Carrinho atualizado com sucesso!",
+            carrinho: data
           });
   
         } else {
-          res.status(400).send({ message: "Usuário não encontrado!" })
+          res.status(404).send({ 
+            message: "Carrinho não encontrado!" 
+          });
         } 
   
       } catch (erro) {
-        console.log(erro);
+        res.status(400).json({
+          message: erro.message,
+          error: true
+        });
       };
     });
 
@@ -85,9 +105,15 @@ const carrinhoController = (app, db) => {
       try {
         const id = req.params.id;
         const data = await newCarrinhoDao.Deletar(id);
-        res.send(data);
+        res.send({
+          carrinho: data,
+          error: false
+        });
       } catch (erro) {
-        console.log(erro);
+        res.status(400).json({
+          message: erro.message,
+          error: true
+        });
       };
     });
 };

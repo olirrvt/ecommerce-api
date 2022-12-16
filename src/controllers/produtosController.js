@@ -8,9 +8,15 @@ const productController = (app, db) => {
     app.get("/products", async (req, res) => {
         try {
             const dataProduct = await newProductsDao.PegarTodosProdutos();
-            res.json(dataProduct);
+            res.json({
+              produto: dataProduct,
+              error: false
+            });
           } catch (erro) {
-            console.log(erro);
+            res.status(400).json({
+              message: erro.message,
+              error: true
+            });
           }
     });
 
@@ -19,9 +25,15 @@ const productController = (app, db) => {
       try {
         const id = req.params.id;
         const dataProduct = await newProductsDao.PegarProdutoId(id);
-        res.status(200).json(dataProduct);
+        res.status(200).json({
+          usuario: dataProduct,
+          error: false
+        });
       } catch (erro) {
-        console.log(erro);
+        res.status(400).json({
+          message: erro.message,
+          error: true
+        });
       };
     });
 
@@ -44,7 +56,10 @@ const productController = (app, db) => {
                 produto: newProductData,
               });
           } catch (erro) {
-            console.log(erro);
+            res.status(400).json({
+              message: erro.message,
+              error: true
+            });
           };
     });
 
@@ -77,11 +92,17 @@ const productController = (app, db) => {
           });
   
         } else {
-          res.status(400).send({ message: "Produto não encontrado!" })
+          res.status(404).send({
+            message: "Produto não encontrado!",
+            error: true
+          });
         };
   
       } catch (erro) {
-        console.log(erro);
+        res.status(400).json({
+          message: erro.message,
+          error: true
+        });
       };
     });
 
@@ -91,9 +112,16 @@ const productController = (app, db) => {
       try {
       const id = req.params.id;
       const data = await newProductsDao.DeletarProduto(id);
-      res.send(data);
+      res.send({
+        message: "Usuário deletado com sucesso!",
+        usuario: data,
+        error: false
+      });
     } catch (erro) {
-      console.log(erro);
+      res.status(400).json({
+        message: erro.message,
+        error: true
+      });
     };
 
   });

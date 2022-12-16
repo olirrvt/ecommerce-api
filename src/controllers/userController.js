@@ -8,9 +8,15 @@ const userController = (app, db) => {
   app.get("/users", async (req, res) => {
     try {
       const dataUsers = await newUsersDao.pegarTodosDados();
-      res.json(dataUsers);
+      res.json({
+        usuario: dataUsers,
+        error: false
+      });
     } catch (erro) {
-      console.log(erro);
+      res.status(400).send({
+        message: erro.message,
+        error: true
+      });
     }
   });
 
@@ -19,20 +25,47 @@ const userController = (app, db) => {
     try {
       const id = req.params.id;
       const dataUser = await newUsersDao.pegarUserId(id);
-      res.status(200).json(dataUser);
+      res.status(200).json({
+        usuario: dataUser,
+        error: false
+      });
     } catch (erro) {
-      console.log(erro);
+      res.status(400).send({
+        message: erro.message,
+        error: true
+      });
     };
   });
 
   // Login
   app.get('/login', async (req, res) => {
     try {
-      const { email, senha } = req.body;
+      const {
+        email,
+        senha
+      } = req.body;
       const dataUser = await newUsersDao.Login(email, senha);
-      res.status(200).json(dataUser);
+
+      if(dataUser !== '') {
+        res.status(200)
+        .json({
+          message: "Login efetuado com sucesso",
+          usuario: dataUser[0].nome,
+          logado: true,
+          error: false
+        });
+      } else {
+        res.status(401).json({
+          message: "Login inválido",
+          error: true
+        });
+      }
+
     } catch (erro) {
-      console.log(erro);
+      res.status(400).send({
+        message: erro.message,
+        error: true
+      });
     }
   });
 
@@ -51,46 +84,57 @@ const userController = (app, db) => {
         .json({
           message: "Usuário inserido com sucesso!",
           usuario: newUserData,
+          error: false
         });
     } catch (erro) {
-      console.log(erro);
+      res.status(400).json({
+        message: erro.message,
+        error: true
+      });
     };
   });
 
   // EditUser
-  app.put("/user/:id", async (req, res) => { 
+  app.put("/user/:id", async (req, res) => {
     const id = req.params.id;
     try {
       const dadosAntigos = await newUsersDao.pegarUserId(id);
 
       if (dadosAntigos[0].id) {
 
-        const dadosNovos = new User (
+        const dadosNovos = new User(
           req.body.nome,
-          req.body.email, 
-          req.body.senha 
+          req.body.email,
+          req.body.senha
         );
 
-        const usuarioAtual = [ 
-          dadosNovos.nome || dadosAntigos[0].nome, 
-          dadosNovos.email || dadosAntigos[0].email, 
+        const usuarioAtual = [
+          dadosNovos.nome || dadosAntigos[0].nome,
+          dadosNovos.email || dadosAntigos[0].email,
           dadosNovos.senha || dadosAntigos[0].senha,
           id,
         ];
-  
+
         const data = await newUsersDao.EditarDados(usuarioAtual);
-  
+
         res.status(200).json({
           message: "Usuário atualizado com sucesso!",
-          usuario: data
+          usuario: data,
+          error: false
         });
 
       } else {
-        res.status(400).send({ message: "Usuário não encontrado!" })
-      } 
+        res.status(400).json({
+          message: "Usuário não encontrado!",
+          error: true
+        })
+      }
 
     } catch (erro) {
-      console.log(erro);
+      res.status(400).json({
+        message: erro.message,
+        error: true
+      });
     };
 
   });
@@ -100,9 +144,16 @@ const userController = (app, db) => {
     try {
       const id = req.params.id;
       const data = await newUsersDao.DeletarDado(id);
-      res.send(data);
+      res.status(200).json({
+        message: "Usuário deletado com sucesso!",
+        usuario: data,
+        error: false
+      });
     } catch (erro) {
-      console.log(erro);
+      res.status(400).json({
+        message: erro.message,
+        error: true
+      });
     };
   });
 };
