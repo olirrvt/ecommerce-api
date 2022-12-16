@@ -1,5 +1,5 @@
 // import { v4 as uuidv4 } from "uuid";
-import { hash } from "bcrypt";
+import { sha256 } from "js-sha256";
 
 class User {
 
@@ -7,14 +7,14 @@ class User {
         if (!senha) {
             return '';
         } else {
-            return hash(senha, 8);
+            return sha256(senha);
         }
     };
 
     constructor(nome, email, senha) {
         this.nome = nome;
         this.email = email;
-        this.senha = hash(senha, 8);
+        this.senha = sha256(senha);
     };
 };
 

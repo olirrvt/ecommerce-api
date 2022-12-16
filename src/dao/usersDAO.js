@@ -33,12 +33,12 @@ class UsersDAO {
 
   };
 
-  Login(email, senha) {
+  Login(email, senhaCripto) {
 
     const SQL = "SELECT * FROM users WHERE email = ? AND senha = ?"
 
     return new Promise((resolve, reject) => {
-      this.db.all(SQL, email, senha, (erro, rows) => {
+      this.db.all(SQL, email, senhaCripto, (erro, rows) => {
         if (!erro) {
           resolve(rows)
         } else {

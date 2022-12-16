@@ -1,6 +1,6 @@
 import User from "../models/userModels.js";
 import UsersDAO from "../dao/usersDAO.js";
-import { compare } from "bcrypt";
+import { sha256 } from "js-sha256";
 
 const userController = (app, db) => {
   const newUsersDao = new UsersDAO(db);
@@ -41,14 +41,11 @@ const userController = (app, db) => {
   // Login
   app.get('/login', async (req, res) => {
     try {
-      const {
-        email,
-        senha
-      } = req.body;
 
-      console.log(compare(senha, ))
+      const { email, senha } = req.body;
+      const senhaCripto = sha256(senha); 
       
-      const dataUser = await newUsersDao.Login(email, senha);
+      const dataUser = await newUsersDao.Login(email, senhaCripto);
       res.status(200)
         .json({
           message: "Login efetuado com sucesso",
@@ -142,7 +139,6 @@ const userController = (app, db) => {
       const data = await newUsersDao.DeletarDado(id);
       res.status(200).json({
         message: "Usuário deletado com sucesso!",
-        usuario: data,
         error: false
       });
     } catch (erro) {
