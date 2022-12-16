@@ -1,5 +1,6 @@
 import User from "../models/userModels.js";
 import UsersDAO from "../dao/usersDAO.js";
+import { compare } from "bcrypt";
 
 const userController = (app, db) => {
   const newUsersDao = new UsersDAO(db);
@@ -44,6 +45,8 @@ const userController = (app, db) => {
         email,
         senha
       } = req.body;
+
+      console.log(compare(senha, ))
       
       const dataUser = await newUsersDao.Login(email, senha);
       res.status(200)
