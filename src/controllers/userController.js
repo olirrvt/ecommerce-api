@@ -44,22 +44,15 @@ const userController = (app, db) => {
         email,
         senha
       } = req.body;
+      
       const dataUser = await newUsersDao.Login(email, senha);
-
-      if(dataUser !== '') {
-        res.status(200)
+      res.status(200)
         .json({
           message: "Login efetuado com sucesso",
           usuario: dataUser[0].nome,
           logado: true,
           error: false
         });
-      } else {
-        res.status(401).json({
-          message: "Login inválido",
-          error: true
-        });
-      }
 
     } catch (erro) {
       res.status(400).send({
