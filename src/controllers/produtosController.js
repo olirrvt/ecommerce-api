@@ -8,15 +8,9 @@ const productController = (app, db) => {
     app.get("/products", async (req, res) => {
         try {
             const dataProduct = await newProductsDao.PegarTodosProdutos();
-            res.json({
-              produto: dataProduct,
-              error: false
-            });
+            res.json({ produto: dataProduct });
           } catch (erro) {
-            res.status(400).json({
-              message: erro.message,
-              error: true
-            });
+            res.status(400).json({ message: erro.message });
           }
     });
 
@@ -113,7 +107,6 @@ const productController = (app, db) => {
       const id = req.params.id;
       const data = await newProductsDao.DeletarProduto(id);
       res.send({
-        message: "Usuário deletado com sucesso!",
         usuario: data,
         error: false
       });

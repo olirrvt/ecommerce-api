@@ -7,7 +7,7 @@ const middlewaresConfig = (app, Express, cors) => {
   });
 
   const options = {
-    origin: ["*"]
+    origin: "*"
   };
 
   app.use(cors(options));
