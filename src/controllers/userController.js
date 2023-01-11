@@ -28,6 +28,7 @@ const userController = (app, db) => {
       const dataUser = await newUsersDao.pegarUserId(id);
       res.status(200).json({
         usuario: dataUser,
+        logado: false,
         error: false
       });
     } catch (erro) {
@@ -37,6 +38,24 @@ const userController = (app, db) => {
       });
     };
   });
+  
+  // GetUserEmail
+  app.get("/userLogin/:email", async (req, res) => {
+    try {
+
+      const email = req.params.email;
+      const dataUser = await newUsersDao.pegarUserEmail(email);
+      res.status(200).json({ 
+        usuario: dataUser
+      });
+    } catch {
+      res.status(400).send({
+        message: erro.message,
+        error: true
+      });
+    };
+  });
+
 
   // Login
   app.get('/login', async (req, res) => {
@@ -61,6 +80,7 @@ const userController = (app, db) => {
       });
     }
   });
+
 
   // PostUser
   app.post("/newUser", async (req, res) => {

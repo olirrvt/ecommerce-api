@@ -1,3 +1,4 @@
+
 class UsersDAO {
   constructor(banco) {
     this.db = banco;
@@ -32,6 +33,24 @@ class UsersDAO {
     });
 
   };
+
+
+  pegarUserEmail(email) {
+
+    const SQL = "SELECT * from users WHERE email = ?"
+
+    return new Promise((resolve, reject) => {
+      this.db.all(SQL, email, (erro, rows) => {
+        if(!erro) {
+          resolve(rows);
+        } else {
+          reject(erro);
+        };
+      });
+    });
+
+  };
+
 
   Login(email, senhaCripto) {
 
