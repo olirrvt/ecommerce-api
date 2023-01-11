@@ -40,7 +40,7 @@ const userController = (app, db) => {
   });
   
   // GetUserEmail
-  app.get("/userLogin/:email", async (req, res) => {
+  app.get("/usermail/:email", async (req, res) => {
     try {
 
       const email = req.params.email;
