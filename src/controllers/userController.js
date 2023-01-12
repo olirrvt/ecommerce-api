@@ -64,10 +64,12 @@ const userController = (app, db) => {
       const senhaCripto = sha256(senha);
       
       const dataUser = await newUsersDao.Login(email, senhaCripto);
+      const checkedArray = dataUser.length;
 
         res.status(200)
         .json({
-          message: "Login efetuado com sucesso",
+          message: checkedArray ? "Login efetuado com sucesso" : "Dados inválidos",
+          logado: checkedArray ? true : false,
           usuario: dataUser
         });
 
@@ -91,6 +93,7 @@ const userController = (app, db) => {
       );
 
       const newUserData = await newUsersDao.InserirDadosNovo(novoUsuario);
+
       res
         .status(200)
         .json({

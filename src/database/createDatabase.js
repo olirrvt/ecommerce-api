@@ -19,9 +19,9 @@ function enableForeignKey() {
 const USERS_SCHEMA = `
 CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome VARCHAR(80),
-    email VARCHAR(80),
-    senha VARCHAR(100)
+    nome VARCHAR(80) NOT NULL,
+    email VARCHAR(80) NOT NULL,
+    senha VARCHAR(100) NOT NULL
 )`;
 
 function CreateTableUser() {
@@ -33,9 +33,9 @@ function CreateTableUser() {
 const PRODUCTS_SCHEMA = `
 CREATE TABLE products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    titulo VARCHAR(80),
+    titulo VARCHAR(80) NOT NULL,
     descricao VARCHAR(200),
-    valor FLOAT 
+    valor FLOAT NOT NULL 
 )`;
 
   function CreateTableProduct() {
