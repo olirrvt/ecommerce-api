@@ -92,15 +92,26 @@ const userController = (app, db) => {
         req.body.senha
       );
 
-      const newUserData = await newUsersDao.InserirDadosNovo(novoUsuario);
+      const checkedUser = await newUsersDao.pegarUserEmail(req.body.email);
+      let checks = checkedUser.length;
 
-      res
-        .status(200)
-        .json({
-          message: "Usuário inserido com sucesso!",
-          usuario: newUserData,
-          error: false
-        });
+      if ( !checks ) {
+        const newUserData = await newUsersDao.InserirDadosNovo(novoUsuario);
+
+        res
+          .status(200)
+          .json({
+            message: "Usuário inserido com sucesso!",
+            usuario: newUserData,
+            error: false
+          });
+      } else {
+        res.json({
+          message: "Usuário já cadastrado",
+          usuario: checkedUser
+        })
+      }
+
     } catch (erro) {
       res.status(400).json({
         message: erro.message,
