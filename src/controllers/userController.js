@@ -45,10 +45,11 @@ const userController = (app, db) => {
 
       const email = req.params.email;
       const dataUser = await newUsersDao.pegarUserEmail(email);
+      // console.log(dataUser[0].email);
       res.status(200).json({ 
         usuario: dataUser
       });
-    } catch {
+    } catch(erro) {
       res.status(400).send({
         message: erro.message,
         error: true
@@ -56,24 +57,22 @@ const userController = (app, db) => {
     };
   });
 
-
   // Login
-  app.get('/login', async (req, res) => {
+  app.post('/login', async (req, res) => {
     try {
-
       const { email, senha } = req.body;
-      const senhaCripto = sha256(senha); 
+      const senhaCripto = sha256(senha);
       
       const dataUser = await newUsersDao.Login(email, senhaCripto);
-      res.status(200)
+
+        res.status(200)
         .json({
           message: "Login efetuado com sucesso",
-          usuario: dataUser[0].nome,
-          logado: true,
-          error: false
+          usuario: dataUser
         });
 
     } catch (erro) {
+      console.log(erro);
       res.status(400).send({
         message: erro.message,
         error: true
