@@ -64,12 +64,12 @@ const userController = (app, db) => {
       const senhaCripto = sha256(senha);
       
       const dataUser = await newUsersDao.Login(email, senhaCripto);
-      const checkedArray = dataUser.length;
+      const checkedUser = dataUser.length;
 
         res.status(200)
         .json({
-          message: checkedArray ? "Login efetuado com sucesso" : "Dados inválidos",
-          logado: checkedArray ? true : false,
+          message: checkedUser ? "Login efetuado com sucesso" : "Erro na autenticação",
+          logado: checkedUser ? true : false,
           usuario: dataUser
         });
 
