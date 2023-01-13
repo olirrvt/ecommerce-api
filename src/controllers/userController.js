@@ -97,18 +97,19 @@ const userController = (app, db) => {
 
       if ( !checks ) {
         const newUserData = await newUsersDao.InserirDadosNovo(novoUsuario);
-
         res
           .status(200)
           .json({
             message: "Usuário inserido com sucesso!",
             usuario: newUserData,
+            logado: true,
             error: false
           });
       } else {
         res.json({
           message: "Usuário já cadastrado",
-          usuario: checkedUser
+          usuario: checkedUser,
+          logado: false
         })
       }
 
