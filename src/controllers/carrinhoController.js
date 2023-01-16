@@ -20,7 +20,7 @@ const carrinhoController = (app, db) => {
           }
     });
 
-    app.get("/product/:id", async (req, res) => {
+    app.get("/carrinho/:id", async (req, res) => {
       try {
         const id = req.params.id;
         const carrinhoData = await newCarrinhoDao.PegarId(id);
@@ -53,6 +53,7 @@ const carrinhoController = (app, db) => {
                 carrinho: newStateCarrinho
               });
           } catch (erro) {
+            console.log(erro);
             res.status(400).json({
               message: erro.message,
               error: true
@@ -60,7 +61,7 @@ const carrinhoController = (app, db) => {
           };
     });
 
-    app.put("/editProduct/:id", async (req, res) => {
+    app.put("/carrinho/:id", async (req, res) => {
       const id = req.params.id;
       try {
         const carrinhoAntigo = await newCarrinhoDao.PegarId(id);
