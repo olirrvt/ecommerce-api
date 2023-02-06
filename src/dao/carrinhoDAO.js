@@ -3,11 +3,17 @@ class CarrinhoDAO {
     this.db = banco;
   }
 
-  PegarTodos() {
-    const SQL = `SELECT * FROM carrinho`;
+  PegarTodos(userId) {
+
+    const SQL = 
+    `SELECT products 
+    FROM carrinho
+    INNER JOIN products
+    ON carrinho.product_id = product.id
+    WHERE carrinho.user_id = ?`;
 
     return new Promise((resolve, reject) => {
-      this.db.all(SQL, (erro, rows) => {
+      this.db.all(SQL, userId, (erro, rows) => {
         if (!erro) {
           resolve(rows);
         } else {
@@ -34,12 +40,13 @@ class CarrinhoDAO {
   }
 
   InserirNovo(novoCarrinho) {
-    const SQL = `INSERT INTO carrinho (status, user_id, product_id) VALUES (?,?,?)`;
+    const SQL = 
+    `INSERT INTO carrinho (user_id, product_id) 
+    VALUES (?,?)`;
 
     return new Promise((resolve, reject) => {
       this.db.all(SQL, 
         [
-            novoCarrinho.status, 
             novoCarrinho.user_id, 
             novoCarrinho.product_id
         ], 

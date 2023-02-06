@@ -2,12 +2,14 @@ import Carrinho from "../models/userModels.js";
 import CarrinhoDAO from "../dao/carrinhoDAO.js";
 
 const carrinhoController = (app, db) => {
+
     const newCarrinhoDao = new CarrinhoDAO(db);
 
     // GetAll
-    app.get("/carrinho", async (req, res) => {
+    app.get("/carrinho/:userId", async (req, res) => {
         try {
-            const dadosCarrinho = await newCarrinhoDao.PegarTodos();
+            const userId = req.params.userId;
+            const dadosCarrinho = await newCarrinhoDao.PegarTodos(userId);
             res.json({
               carrinho: dadosCarrinho,
               error: false
@@ -39,8 +41,8 @@ const carrinhoController = (app, db) => {
     // PostCarrinho
     app.post("/carrinho", async (req, res) => {
         try {
+
             const novoCarrinho = new Carrinho(
-              req.body.status,
               req.body.user_id,
               req.body.product_id
             );
@@ -68,14 +70,13 @@ const carrinhoController = (app, db) => {
   
         if (carrinhoAntigo[0].id) {
   
-          const dadosNovos = new User (
+          const dadosNovos = new Carrinho (
             req.body.status,
             req.body.user_id, 
             req.body.product_id 
           );
   
           const carrinhoAtual = [ 
-            dadosNovos.status || carrinhoAntigo[0].status, 
             dadosNovos.user_id || carrinhoAntigo[0].user_id, 
             dadosNovos.product_id || carrinhoAntigo[0].product_id,
             id,

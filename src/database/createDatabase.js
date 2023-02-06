@@ -47,9 +47,8 @@ CREATE TABLE products (
 const CARRINHO_SCHEMA = `
 CREATE TABLE carrinho (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    status VARCHAR(20),
-    user_id INTEGER,
-    product_id INTEGER,
+    user_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 )`;
